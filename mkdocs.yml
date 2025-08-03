@@ -1,0 +1,7 @@
+site_name: FletCacheImg
+
+theme:
+  name: "material"
+
+plugins:
+  - mkdocstrings
