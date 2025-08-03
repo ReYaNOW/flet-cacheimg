@@ -13,7 +13,7 @@ CreateControlFactory createControl = (CreateControlArgs args) {
     );
   }
 
-  print("No matching control for type: '$type', returning null");
+  print("No matchiiing control for type: '$type', returning null");
   return null;
 };
 
