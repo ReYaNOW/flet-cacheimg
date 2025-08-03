@@ -8,7 +8,7 @@ authors = [
     { name = "Flet developer", email = "you@example.com" }
 ]
 dependencies = [
-  "flet-cacheimg",
+  "flet-cacheimg @ git+https://github.com/ReYaNOW/flet-cacheimg.git",
   "flet>=0.28.3",
 ]
 
@@ -30,17 +30,17 @@ copyright = "Copyright (C) 2025 by MyCompany"
 [tool.flet.app]
 path = "src"
 
-[tool.flet.dev_packages]
-flet-cacheimg = "../.." # relative path
+#[tool.flet.dev_packages]
+#flet-cacheimg = "../.." # relative path
 
 [tool.uv]
 dev-dependencies = [
     "flet[all]==0.28.3",
 ]
 
-[tool.uv.sources]
-flet-cacheimg = { path = "../../", editable = true }
+#[tool.uv.sources]
+#flet-cacheimg = { path = "../../", editable = true }
 
 [tool.poetry.group.dev.dependencies]
 flet = {extras = ["all"], version = "0.28.3"}
-flet-cacheimg = {path = "../../", develop = true}
+#flet-cacheimg = {path = "../../", develop = true}

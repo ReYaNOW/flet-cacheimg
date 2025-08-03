@@ -2,17 +2,19 @@ import 'package:flet/flet.dart';
 import 'package:flet_cacheimg/src/flet_cacheimg.dart';
 
 CreateControlFactory createControl = (CreateControlArgs args) {
-  print("createControl called with type: ${args.control.type}");
+  final type = args.control.type.trim().toLowerCase();
+  print("createControleeeee called with type: '$type'");
 
-  switch (args.control.type) {
-    case "flet_cacheimg":
-      return FletCacheImgControl(
-        parent: args.parent,
-        control: args.control,
-      );
-    default:
-      return null;
+  if (type == "image") {
+    print("return FletCacheImgControl");
+    return FletCacheImgControl(
+      parent: args.parent,
+      control: args.control,
+    );
   }
+
+  print("No matching control for type: '$type', returning null");
+  return null;
 };
 
 void ensureInitialized() {
