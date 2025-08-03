@@ -5,7 +5,7 @@ CreateControlFactory createControl = (CreateControlArgs args) {
   final type = args.control.type.trim().toLowerCase();
   print("createControleeeee called with type: '$type'");
 
-  if (type == "image") {
+  if (type == "flet_cacheimg") {
     print("return FletCacheImgControl");
     return FletCacheImgControl(
       parent: args.parent,
