@@ -218,8 +218,6 @@ Widget buildCachedImage({
             filterQuality: filterQuality,
             color: color,
             colorBlendMode: colorBlendMode,
-            placeholder: (context, url) =>
-                const Center(child: CircularProgressIndicator()),
             errorWidget: errorCtrl != null
                 ? (context, url, error) => errorCtrl!
                 : (context, url, error) => const Icon(Icons.error),
