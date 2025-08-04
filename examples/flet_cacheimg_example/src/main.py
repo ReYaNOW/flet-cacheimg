@@ -1,18 +1,34 @@
 import flet as ft
-from flet_cacheimg import FletCacheimg
+from flet_cacheimg import Cacheimg, CacheCircleAvatar
 
 
 def main(page: ft.Page):
     page.add(
-        ft.Image(
-            src="http://127.0.0.1:22888/assets/images/AccountEditPage/Sign%20up-pana.png",
+        Cacheimg(
+            src="https://flet.dev/img/logo.svg",
             width=150,
             height=150,
-            tooltip="Кэшированное изображение",
+            tooltip="Cached image",
             opacity=0.9,
         )
     )
-    print(1)
+    page.add(
+        CacheCircleAvatar(
+            radius=24,
+            foreground_image_src='https://flet.dev/img/logo.svg',
+        )
+    )
+    page.add(
+        ft.CircleAvatar(
+            radius=20,
+            content=Cacheimg(
+                src='https://flet.dev/img/logo.svg',
+                width=40,
+                height=40,
+                fit=ft.ImageFit.COVER,
+            ),
+        )
+    )
 
 
 ft.app(main)
