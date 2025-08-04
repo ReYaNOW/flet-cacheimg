@@ -1,1 +1,1 @@
-from flet_cacheimg.flet_cacheimg import FletCacheimg, FletCacheCircleAvatar
+from flet_cacheimg.flet_cacheimg import Cacheimg, CacheCircleAvatar
