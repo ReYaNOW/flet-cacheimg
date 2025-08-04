@@ -1,9 +1,10 @@
 import 'package:flet/flet.dart';
 import 'package:flet_cacheimg/src/flet_cacheimg.dart';
+import 'package:flet_cacheimg/src/flet_cacheavatar.dart';
 
 CreateControlFactory createControl = (CreateControlArgs args) {
   final type = args.control.type.trim().toLowerCase();
-  print("createControleeeee called with type: '$type'");
+  print("createControl called with type: '$type'");
 
     if (type == "flet_cacheimg") {
         print("return FletCacheImgControl");
@@ -18,7 +19,19 @@ CreateControlFactory createControl = (CreateControlArgs args) {
         );
     }
 
-  print("No matchiiing control for type: '$type', returning null");
+    if (type == "flet_cache_circle_avatar") {
+      print("return FletCacheCircleAvatarControl");
+      return FletCacheCircleAvatarControl(
+        key: args.key,
+        parent: args.parent,
+        children: args.children,
+        control: args.control,
+        parentDisabled: args.parentDisabled,
+        backend: args.backend,
+      );
+  }
+
+  print("No matching control for type: '$type', returning null");
   return null;
 };
 
