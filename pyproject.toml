@@ -1,7 +1,7 @@
 [project]
 name = "flet-cacheimg"
-version = "0.1.1"
-description = "FletCacheImg control for Flet"
+version = "0.1.2"
+description = "Cacheimg and CacheCircleAvatar control for Flet"
 readme = "README.md"
 requires-python = ">=3.9"
 authors = [
@@ -12,10 +12,10 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://mydomain.dev"
-Documentation = "https://github.com/MyGithubAccount/flet-cacheimg"
-Repository = "https://github.com/MyGithubAccount/flet-cacheimg"
-Issues = "https://github.com/MyGithubAccount/flet-cacheimg/issues"
+Homepage = "https://github.com/ReYaNOW/flet-cacheimg"
+Documentation = "https://github.com/ReYaNOW/flet-cacheimg"
+Repository = "https://github.com/ReYaNOW/flet-cacheimg"
+Issues = "https://github.com/ReYaNOW/flet-cacheimg/issues"
 
 [tool.setuptools.package-data]
 "flutter.flet_cacheimg" = ["**/*"]
