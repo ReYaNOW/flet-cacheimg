@@ -47,7 +47,7 @@ class FletCacheCircleAvatarControl extends StatelessWidget with FletStoreMixin {
             foregroundImage = AssetImage(assetSrc.path);
           } else {
             // URL
-            foregroundImage = CachedNetworkImage(assetSrc.path);
+            foregroundImage = CachedNetworkImageProvider(assetSrc.path);
           }
         }
 
@@ -58,7 +58,7 @@ class FletCacheCircleAvatarControl extends StatelessWidget with FletStoreMixin {
             backgroundImage = AssetImage(assetSrc.path);
           } else {
             // URL
-            backgroundImage = CachedNetworkImage(assetSrc.path);
+            backgroundImage = CachedNetworkImageProvider(assetSrc.path);
           }
         }
       }
