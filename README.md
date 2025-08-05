@@ -1,5 +1,5 @@
 # flet-cacheimg
-Cacheimg and CacheCircleAvatar controls for Flet
+Cacheimg and CacheCircleAvatar control for Flet and preload all images from assets folder via flutter precacheImage.
 
 ### Warning
 Images will only be cached in built packages.
@@ -18,12 +18,12 @@ This is limitation of the current Flet version (0.28.3).
 
 ```python
 import flet as ft
-from flet_cacheimg import Cacheimg, CacheCircleAvatar
+from flet_cacheimg import CacheImage, CacheCircleAvatar
 
 
 def main(page: ft.Page):
     page.add(
-        Cacheimg(
+        CacheImage(
             src="https://flet.dev/img/logo.svg",
             width=150,
             height=150,
@@ -40,7 +40,7 @@ def main(page: ft.Page):
     page.add(
         ft.CircleAvatar(
             radius=20,
-            content=Cacheimg(
+            content=CacheImage(
                 src='https://flet.dev/img/logo.svg',
                 width=40,
                 height=40,
