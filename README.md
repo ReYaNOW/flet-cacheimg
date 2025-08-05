@@ -1,5 +1,5 @@
 # flet-cacheimg
-Cacheimg and CacheCircleAvatar control for Flet and preload all images from assets folder via flutter precacheImage.
+Cacheimg and CacheCircleAvatar control for Flet.
 
 ### Warning
 Images will only be cached in built packages.

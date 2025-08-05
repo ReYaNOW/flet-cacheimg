@@ -1,7 +1,7 @@
 [project]
 name = "flet-cacheimg"
-version = "0.1.5"
-description = "Cacheimg and CacheCircleAvatar control for Flet and preload all images from assets folder via flutter precacheImage."
+version = "0.1.6"
+description = "Cacheimg and CacheCircleAvatar control for Flet."
 readme = "README.md"
 requires-python = ">=3.9"
 authors = [
