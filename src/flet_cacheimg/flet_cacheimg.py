@@ -4,7 +4,18 @@ import os
 IS_BUILT = bool(os.getenv('FLET_PLATFORM'))
 
 if IS_BUILT:
-    class Cacheimg(ft.Image):
+
+    class CacheImage(ft.Image):
+        def _get_control_name(self):
+            return "flet_cacheimg"
+
+    class CacheCircleAvatar(ft.CircleAvatar):
+        def _get_control_name(self):
+            return "flet_cache_circle_avatar"
+
+else:
+
+    class CacheImage(ft.Image):
         """
         A control that displays an image.
 
@@ -32,8 +43,7 @@ if IS_BUILT:
         Online docs: https://flet.dev/docs/controls/image
         """
 
-        def _get_control_name(self):
-            return "flet_cacheimg"
+        pass
 
     class CacheCircleAvatar(ft.CircleAvatar):
         """
@@ -92,12 +102,4 @@ if IS_BUILT:
         Online docs: https://flet.dev/docs/controls/circleavatar
         """
 
-        def _get_control_name(self):
-            return "flet_cache_circle_avatar"
-
-else:
-    class Cacheimg(ft.Image):
-        pass
-
-    class CacheCircleAvatar(ft.CircleAvatar):
         pass
