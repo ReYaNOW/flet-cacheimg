@@ -6,6 +6,7 @@ import 'package:flet/flet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:shimmer/shimmer.dart';
 
 class FletCacheImgControl extends StatelessWidget with FletStoreMixin {
   final Control? parent;
@@ -196,6 +197,17 @@ Widget buildCachedImage({
           );
         }
       } else {
+        // Виджет-плейсхолдер для сетевых изображений
+        var shimmer = Shimmer.fromColors(
+          baseColor: Colors.grey.shade400,
+          highlightColor: Colors.grey.shade200,
+          child: Container(
+            color: Colors.white,
+            width: width,
+            height: height,
+          ),
+        );
+
         if (assetSrc.path.endsWith(".svg")) {
           image = SvgPicture.network(
             assetSrc.path,
@@ -207,6 +219,7 @@ Widget buildCachedImage({
                 ? ColorFilter.mode(color, colorBlendMode ?? BlendMode.srcIn)
                 : null,
             semanticsLabel: semanticsLabel,
+            placeholderBuilder: (context) => shimmer,
           );
         } else {
           image = CachedNetworkImage(
@@ -218,6 +231,7 @@ Widget buildCachedImage({
             filterQuality: filterQuality,
             color: color,
             colorBlendMode: colorBlendMode,
+            placeholder: (context, url) => shimmer,
             errorWidget: errorCtrl != null
                 ? (context, url, error) => errorCtrl!
                 : (context, url, error) => const Icon(Icons.error),

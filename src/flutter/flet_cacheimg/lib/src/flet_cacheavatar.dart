@@ -1,11 +1,7 @@
-import 'dart:convert';
-import 'dart:typed_data';
-import 'dart:io' as io;
-
 import 'package:flet/flet.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:shimmer/shimmer.dart';
 
 class FletCacheCircleAvatarControl extends StatelessWidget with FletStoreMixin {
   final Control? parent;
@@ -34,37 +30,73 @@ class FletCacheCircleAvatarControl extends StatelessWidget with FletStoreMixin {
           children.where((c) => c.name == "content" && c.isVisible);
 
       ImageProvider<Object>? backgroundImage;
-      ImageProvider<Object>? foregroundImage;
-
-      if (foregroundImageSrc != null || backgroundImageSrc != null) {
-        var assetSrc = getAssetSrc((foregroundImageSrc ?? backgroundImageSrc)!,
-            pageArgs.pageUri!, pageArgs.assetsDir);
-
-        // foregroundImage
-        if (foregroundImageSrc != null) {
-          if (assetSrc.isFile) {
-            // from File
-            foregroundImage = AssetImage(assetSrc.path);
-          } else {
-            // URL
-            foregroundImage = CachedNetworkImageProvider(assetSrc.path);
-          }
-        }
-
-        // backgroundImage
-        if (backgroundImageSrc != null) {
-          if (assetSrc.isFile) {
-            // from File
-            backgroundImage = AssetImage(assetSrc.path);
-          } else {
-            // URL
-            backgroundImage = CachedNetworkImageProvider(assetSrc.path);
-          }
+      if (backgroundImageSrc != null) {
+        var assetSrc =
+            getAssetSrc(backgroundImageSrc, pageArgs.pageUri!, pageArgs.assetsDir);
+        if (assetSrc.isFile) {
+          backgroundImage = AssetImage(assetSrc.path);
+        } else {
+          backgroundImage = CachedNetworkImageProvider(assetSrc.path);
         }
       }
 
+      Widget? child;
+      if (foregroundImageSrc != null) {
+        var assetSrc =
+            getAssetSrc(foregroundImageSrc, pageArgs.pageUri!, pageArgs.assetsDir);
+
+        final radius = control.attrDouble("radius", 40)!;
+        final size = radius * 2;
+
+        if (assetSrc.isFile) {
+          child = ClipOval(
+            child: Image.asset(
+              assetSrc.path,
+              fit: BoxFit.cover,
+              width: size,
+              height: size,
+            ),
+          );
+        } else {
+          child = ClipOval(
+            child: CachedNetworkImage(
+              imageUrl: assetSrc.path,
+              fit: BoxFit.cover,
+              width: size,
+              height: size,
+              fadeInDuration: const Duration(milliseconds: 300),
+
+              placeholder: (context, url) => Shimmer.fromColors(
+                baseColor: Colors.grey.shade400,
+                highlightColor: Colors.grey.shade200,
+                child: Container(
+                  width: size,
+                  height: size,
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    shape: BoxShape.circle,
+                  ),
+                ),
+              ),
+
+              errorWidget: (context, url, error) {
+                backend.triggerControlEvent(control.id, "image_error", "foreground");
+                return Container(
+                  color: Colors.grey.withOpacity(0.1),
+                  child: const Icon(
+                    Icons.error_outline,
+                    color: Colors.grey,
+                  ),
+                );
+              },
+            ),
+          );
+        }
+      } else if (contentCtrls.isNotEmpty) {
+        child = createControl(control, contentCtrls.first.id, disabled);
+      }
+
       var avatar = CircleAvatar(
-          foregroundImage: foregroundImage,
           backgroundImage: backgroundImage,
           backgroundColor: control.attrColor("bgColor", context),
           foregroundColor: control.attrColor("color", context),
@@ -74,18 +106,10 @@ class FletCacheCircleAvatarControl extends StatelessWidget with FletStoreMixin {
           onBackgroundImageError: backgroundImage != null
               ? (object, trace) {
                   backend.triggerControlEvent(
-                      control.id, "imageError", "background");
+                      control.id, "image_error", "background");
                 }
               : null,
-          onForegroundImageError: foregroundImage != null
-              ? (object, trace) {
-                  backend.triggerControlEvent(
-                      control.id, "imageError", "foreground");
-                }
-              : null,
-          child: contentCtrls.isNotEmpty
-              ? createControl(control, contentCtrls.first.id, disabled)
-              : null);
+          child: child);
 
       return constrainedControl(context, avatar, parent, control);
     });
