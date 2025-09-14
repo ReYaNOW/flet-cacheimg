@@ -1,7 +1,7 @@
 [project]
 name = "flet-cacheimg"
-version = "0.1.6"
-description = "Cacheimg and CacheCircleAvatar control for Flet."
+version = "0.2.0"
+description = "CacheImage and CacheCircleAvatar control for Flet."
 readme = "README.md"
 requires-python = ">=3.9"
 authors = [
