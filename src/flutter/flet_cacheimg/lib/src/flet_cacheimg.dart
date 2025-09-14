@@ -44,6 +44,8 @@ class FletCacheImgControl extends StatelessWidget with FletStoreMixin {
         children.where((c) => c.name == "error_content" && c.isVisible);
 
     return withPageArgs((context, pageArgs) {
+      var borderRadius = parseBorderRadius(control, "borderRadius");
+
       Widget? image = buildCachedImage(
         context: context,
         control: control,
@@ -70,6 +72,7 @@ class FletCacheImgControl extends StatelessWidget with FletStoreMixin {
             ? createControl(control, errorContentCtrls.first.id, disabled,
                 parentAdaptive: control.isAdaptive ?? parentAdaptive)
             : null,
+        borderRadius: borderRadius,
       );
 
       return constrainedControl(
@@ -110,6 +113,7 @@ Widget buildCachedImage({
   FilterQuality filterQuality = FilterQuality.low,
   bool disabled = false,
   required PageArgsModel pageArgs,
+  BorderRadius? borderRadius,
 }) {
   const String svgTag = " xmlns=\"http://www.w3.org/2000/svg\"";
   Widget? image;
@@ -198,7 +202,7 @@ Widget buildCachedImage({
         }
       } else {
         // Виджет-плейсхолдер для сетевых изображений
-        var shimmer = Shimmer.fromColors(
+        Widget shimmerContent = Shimmer.fromColors(
           baseColor: Colors.grey.shade400,
           highlightColor: Colors.grey.shade200,
           child: Container(
@@ -207,6 +211,11 @@ Widget buildCachedImage({
             height: height,
           ),
         );
+
+        // ОБЕРТЫВАЕМ SHIMMER В CLIPRRECT, ЕСЛИ ЕСТЬ borderRadius
+        Widget shimmer = borderRadius != null
+            ? ClipRRect(borderRadius: borderRadius, child: shimmerContent)
+            : shimmerContent;
 
         if (assetSrc.path.endsWith(".svg")) {
           image = SvgPicture.network(
